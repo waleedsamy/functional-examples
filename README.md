@@ -43,6 +43,17 @@
       // the function definitions can be enabled or disabled in different scopes
     ```
 
+* A Functor is a structure with a map function.
+ * can compose, so if you know how to map over A[X] and over B[X] you also know how to map over A[B[X]
+
+* A Monad is a structure with a flatMap function.
+ * Monads do not compose
+ 
+* cats import
+ 1- cat package contains type classes i.e Functor, Applicative, Monad, Show
+ 2- cat.syntax contains the syntactic sugar for the type classes (implicits)
+ 3- cat.instances contains implicits for scala type(i.e List) for the type classes???? 
+   if you define implicit of type class T (i.e Show) to your class A, you don't have to define implicit type to of T[List[A]]
 
 #### Resources:
   * https://en.wikipedia.org/wiki/Group_(mathematics)
@@ -50,3 +61,4 @@
   * http://mathworld.wolfram.com/Group.html
   * http://mathworld.wolfram.com/Monoid.html
   * http://eed3si9n.com/herding-cats
+  * https://blog.buildo.io/monad-transformers-for-the-working-programmer-aa7e981190e7
