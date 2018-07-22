@@ -1,6 +1,11 @@
 package io.github.waleedsamy.examples.cats.day01
 
-import cats.data.State
+import cats.data.StateT
+import cats.instances.future._
+
+import scala.concurrent.{Await, Future}
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent.duration.Duration
 
 // State[S, A] is basically a function S => (S, A), where S is the type that represents your state and
 // A is the result the function produces. In addition to returning the result of type A,
@@ -32,23 +37,23 @@ object StateExample extends App {
     Robot(id, sentient, name, model)
   }
 
-  def createRobot3(s0: Seed): Robot = {
-    val (s1, id) = nextLong(s0)
-    val (s2, sentient) = nextBoolan(s1)
-    val (s3, isCatherine) = nextBoolan(s2)
-    val name = if (isCatherine) "Catherine" else "Carlos"
-    val (s4, isReplicant) = nextBoolan(s3)
-    val model = if (isReplicant) "replicant" else "borg"
-    Robot(id, sentient, name, model)
-  }
+  def createRobot3: StateT[Future, AsyncSeed, Robot] = for {
+      id <- nextLong
+      sentient <- nextBoolean
+      isCatherine <- nextBoolean
+      name = if (isCatherine) "Catherine" else "Carlos"
+      isReplicant <- nextBoolean
+      model = if (isReplicant) "replicant" else "borg"
+    } yield Robot(id, sentient, name, model)
 
-  def nextBoolan(seed: Seed): State[Seed, Boolean] = State(
 
+  // StateT[F[_], S, A] This data type represents computations of the form S => F[(S, A)].
+  def nextBoolean: StateT[Future, AsyncSeed, Boolean] = nextLong.map(_ >= 0)
+
+  def nextLong: StateT[Future, AsyncSeed, Long] = StateT(seed =>
+    seed.next zip Future.successful(seed.long)
   )
 
-
-  def nextLong(seed: Seed): (Seed, Long) =
-    (seed.next, seed.long)
 
   println(createRobot1())
   println(createRobot1())
@@ -56,14 +61,21 @@ object StateExample extends App {
   println(createRobot2())
 
   val initialSeed = Seed(13L)
+  val initialAsyncSeed = AsyncSeed(0)
 
-  println(createRobot3(initialSeed))
+  val f1 = createRobot3.runA(initialAsyncSeed)
+  f1 onComplete println
+  Await.ready(f1, Duration.Inf)
 }
 
 final case class Robot(id: Long, sentient: Boolean, name: String, model: String)
 
 final case class Seed(long: Long) {
   def next = Seed(long * 6364136223846793005L + 1442695040888963407L)
+}
+
+final case class AsyncSeed(long: Long) {
+  def next = Future(AsyncSeed(long * 6364136223846793005L + 1442695040888963407L))
 }
 
 
