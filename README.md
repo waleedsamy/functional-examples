@@ -49,6 +49,8 @@
 * A Monad is a structure with a flatMap function.
  * Monads do not compose
  
+* Any expression which is not referentially transparent must contain side-effects, by definition.
+ 
 * cats import
  1- cat package contains type classes i.e Functor, Applicative, Monad, Show
  2- cat.syntax contains the syntactic sugar for the type classes (implicits)

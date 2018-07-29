@@ -37,7 +37,8 @@ object StateExample extends App {
     Robot(id, sentient, name, model)
   }
 
-  def createRobot3: StateT[Future, AsyncSeed, Robot] = for {
+  def createRobot3: StateT[Future, AsyncSeed, Robot] =
+    for {
       id <- nextLong
       sentient <- nextBoolean
       isCatherine <- nextBoolean
@@ -46,14 +47,11 @@ object StateExample extends App {
       model = if (isReplicant) "replicant" else "borg"
     } yield Robot(id, sentient, name, model)
 
-
   // StateT[F[_], S, A] This data type represents computations of the form S => F[(S, A)].
   def nextBoolean: StateT[Future, AsyncSeed, Boolean] = nextLong.map(_ >= 0)
 
-  def nextLong: StateT[Future, AsyncSeed, Long] = StateT(seed =>
-    seed.next zip Future.successful(seed.long)
-  )
-
+  def nextLong: StateT[Future, AsyncSeed, Long] =
+    StateT(seed => seed.next zip Future.successful(seed.long))
 
   println(createRobot1())
   println(createRobot1())
@@ -75,7 +73,6 @@ final case class Seed(long: Long) {
 }
 
 final case class AsyncSeed(long: Long) {
-  def next = Future(AsyncSeed(long * 6364136223846793005L + 1442695040888963407L))
+  def next =
+    Future(AsyncSeed(long * 6364136223846793005L + 1442695040888963407L))
 }
-
-
