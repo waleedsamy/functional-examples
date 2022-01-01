@@ -58,6 +58,7 @@
    if you define implicit of type class T (i.e Show) to your class A, you don't have to define implicit type to of T[List[A]]
 
 #### Resources:
+  * https://archive.md/FgHnB
   * https://en.wikipedia.org/wiki/Group_(mathematics)
   * http://mathworld.wolfram.com/Semigroup.html
   * http://mathworld.wolfram.com/Group.html

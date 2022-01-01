@@ -10,7 +10,8 @@ lazy val root = (project in file(".")).settings(
   name := "FunctionalProgrammingTutorial",
   libraryDependencies ++= Seq(
     catsCore,
-    scalaTest % Test
+    scalaTest % Test,
+    scalaCheck % Test
   )
 )
 
