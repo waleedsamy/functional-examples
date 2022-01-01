@@ -83,3 +83,10 @@ project/plugins/project/
 
 # End of https://www.gitignore.io/api/sbt,scala,intellij
 .idea
+.bloop
+.metals
+.vscode
+project/.bloop
+project/metals.sbt
+project/project
+.bsp

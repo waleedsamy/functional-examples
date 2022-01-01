@@ -14,8 +14,7 @@ object Validator extends App {
     else UsernameHasSpecialCharacters.invalidNel
 
   def validatePassword(password: String) =
-    if (password.matches(
-          "(?=^.{10,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$"))
+    if (password.matches("(?=^.{10,}$)((?=.*\\d)|(?=.*\\W+))(?![.\\n])(?=.*[A-Z])(?=.*[a-z]).*$"))
       password.validNel
     else PasswordDoesNotMeetCriteria.invalidNel
 
@@ -30,16 +29,14 @@ object Validator extends App {
   def validateAge(age: Int) =
     if (age >= 18 && age <= 75) age.validNel else AgeIsInvalid.invalidNel
 
-  def validateForm(username: String,
-                   password: String,
-                   firstName: String,
-                   lastName: String,
-                   age: Int) = {
-    val l = (validateUserName(username),
-             validatePassword(password),
-             validateFirstName(firstName),
-             validateLastName(lastName),
-             validateAge(age))
+  def validateForm(username: String, password: String, firstName: String, lastName: String, age: Int) = {
+    val l = (
+      validateUserName(username),
+      validatePassword(password),
+      validateFirstName(firstName),
+      validateLastName(lastName),
+      validateAge(age)
+    )
 
     l.mapN(RegistrationData)
 
@@ -65,11 +62,7 @@ object Validator extends App {
 
 sealed trait FormValidator {
 
-  final case class RegistrationData(username: String,
-                                    password: String,
-                                    firstName: String,
-                                    lastName: String,
-                                    age: Int)
+  final case class RegistrationData(username: String, password: String, firstName: String, lastName: String, age: Int)
 
   sealed trait DomainValidation {
     def errorMessage: String

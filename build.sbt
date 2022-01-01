@@ -4,7 +4,7 @@ lazy val root = (project in file(".")).settings(
   inThisBuild(
     List(
       organization := "io.github.waleedsamy.examples",
-      scalaVersion := "2.12.6",
+      scalaVersion := "2.13.7",
       version := "0.1.0-SNAPSHOT"
     )),
   name := "FunctionalProgrammingTutorial",
@@ -15,5 +15,3 @@ lazy val root = (project in file(".")).settings(
 )
 
 scalafmtOnCompile := true
-
-scalacOptions += "-Ypartial-unification"

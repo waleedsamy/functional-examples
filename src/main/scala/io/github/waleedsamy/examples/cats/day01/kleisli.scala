@@ -19,10 +19,8 @@ object kleisli extends App {
   // can't compose function with wrong types, in this case reciprocal accept Int to Option[Int]
   // parse is String => Option[Int]
   // reciprocal is Int => Option[Double]
-  val parse: String => Option[Int] = i =>
-    if (i.matches("-?[0-9]+")) Some(i.toInt) else None
-  val reciprocal: Int => Option[Double] = i =>
-    if (i != 0) Some(1.0 / i) else None
+  val parse: String => Option[Int] = i => if (i.matches("-?[0-9]+")) Some(i.toInt) else None
+  val reciprocal: Int => Option[Double] = i => if (i != 0) Some(1.0 / i) else None
 
   // won't compile
   // val parseAndReciprocal: String => Option[Double] = parse andThen reciprocal
@@ -37,8 +35,7 @@ object kleisli extends App {
     if (i != 0) Some(1.0 / i) else None
   }
 
-  val parseAndReciprocal
-    : Kleisli[Option, String, Double] = parseK andThen reciprocalK
+  val parseAndReciprocal: Kleisli[Option, String, Double] = parseK andThen reciprocalK
 
   println(parseAndReciprocal.run("89"))
 
@@ -49,7 +46,7 @@ object kleisli extends App {
 
   // I have Kleisli of String => Option[Int]
   // but I expand it to Unit => Option[Int]
-  val c = parseK local [Unit](_ => "7")
+  val c = parseK local [Unit] (_ => "7")
   println(c.run())
 
   case class DbConfig(url: String, user: String, pass: String)
