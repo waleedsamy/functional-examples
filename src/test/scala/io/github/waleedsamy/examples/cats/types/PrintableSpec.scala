@@ -1,3 +1,5 @@
+package io.github.waleedsamy.examples.cats.types
+
 import org.scalacheck.Properties
 import org.scalacheck.Prop.forAll
 import io.github.waleedsamy.examples.cats.Cat
