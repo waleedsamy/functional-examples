@@ -9,10 +9,14 @@ lazy val root = (project in file(".")).settings(
     )),
   name := "FunctionalProgrammingTutorial",
   libraryDependencies ++= Seq(
+    scalaLogging,
+    logback,
     catsCore,
+    catsEffect,
     scalaTest % Test,
     scalaCheck % Test
   )
 )
 
 scalafmtOnCompile := true
+addCompilerPlugin("org.typelevel" % "kind-projector" % "0.13.2" cross CrossVersion.full)

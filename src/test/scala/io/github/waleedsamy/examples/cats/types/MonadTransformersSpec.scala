@@ -12,11 +12,9 @@ import scala.concurrent.{Await, Future}
 class MonadTransformersSpec extends AnyFlatSpec with should.Matchers with OptionValues {
 
   "MonadTransformers" should "compose Monads easily" in {
-    type Result[A] = OptionT[Future, A]
-
-    val x: Result[Int] = for {
-      a <- 1.pure[Result]
-      b <- 1.pure[Result]
+    val x = for {
+      a <- 1.pure[OptionT[Future, *]]
+      b <- 1.pure[OptionT[Future, *]]
     } yield a + b
 
     Await.result(x.value, 1.second).value should be(2)
