@@ -1,6 +1,5 @@
 package io.github.waleedsamy.examples.cats.day01
 
-import cats.data
 import cats.data.Kleisli
 import cats.implicits._
 

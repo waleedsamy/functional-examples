@@ -1,7 +1,6 @@
 package io.github.waleedsamy.examples.cats.validator
 
 import cats.data.ValidatedNel
-import cats.syntax.ApplicativeOps
 import cats.implicits._
 import io.github.waleedsamy.examples.cats.validator.FormValidator._
 

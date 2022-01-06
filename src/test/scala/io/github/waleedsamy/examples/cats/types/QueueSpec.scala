@@ -8,7 +8,6 @@ import org.scalatest.OptionValues
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers._
 
-import scala.concurrent.duration._
 import scala.collection.immutable.{Queue => ScalaQueue}
 
 class QueueSpec extends AnyFlatSpec with should.Matchers with OptionValues with StrictLogging {
